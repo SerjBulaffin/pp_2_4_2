@@ -12,7 +12,6 @@ import web.model.User;
 import web.service.RoleServiceImpl;
 import web.service.UserDetailsServiceImpl;
 
-import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -31,16 +30,6 @@ public class AdminController {
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
     }
-
-//    @RequestMapping(value = {"/hello", "/"}, method = RequestMethod.GET)
-//    public String printWelcome(ModelMap model) {
-//        List<String> messages = new ArrayList<>();
-//        messages.add("Hello!");
-//        messages.add("I'm Spring MVC-SECURITY application");
-//        messages.add("5.2.0 version by sep'19 ");
-//        model.addAttribute("messages", messages);
-//        return "hello";
-//    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
@@ -156,7 +145,18 @@ public class AdminController {
                              @PathVariable("id") Long id,
                              @RequestParam(value = "nameRoles", required = false) String[] nameRoles) {
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //ПАролли
+        final String oldPassword = userDetailsService.getUser(id).getPassword();
+//        if (!oldPassword.equals(user.getPassword())) {
+//            user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        }
+
+        if (user.getPassword().isEmpty()) {
+            user.setPassword(oldPassword);
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
 
         //отредактировать на случай если нет ролей
         Set<Role> roleSet = new HashSet<>();

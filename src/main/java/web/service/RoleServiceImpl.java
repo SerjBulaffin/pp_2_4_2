@@ -9,6 +9,7 @@ import web.model.Role;
 import java.util.List;
 
 @Service
+@Transactional
 public class RoleServiceImpl {
 
     private final RoleDao roleDao;

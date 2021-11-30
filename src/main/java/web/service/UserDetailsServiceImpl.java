@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import web.dao.UserDao;
 import web.model.User;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserDao userDao;
+    private UserDao userDao;
 
     @Autowired
     public UserDetailsServiceImpl(UserDao userDao) {
@@ -29,18 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userDao.getUserByName(s);
     }
 
-    public List<User> getAllUsers() {
-        return userDao.getAllUsers();
-    }
-
-    public void addUser(User user) {
-        userDao.addUser(user);
-    }
-
-    public void removeUserById(Long id) {
-        userDao.removeUserById(id);
-    }
-
     //получение юзера по ID
     public User getUser(Long id) {
         return userDao.getUser(id);
@@ -49,6 +36,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public User getUserByName(String name) {
         return userDao.getUserByName(name);
     }
+
+    public List<User> getAllUsers() {
+        return userDao.getAllUsers();
+    }
+
+
+    public void addUser(User user) {
+        userDao.addUser(user);
+    }
+
+
+    public void removeUserById(Long id) {
+        userDao.removeUserById(id);
+    }
+
 
     public void updateUser(Long id, User user) {
         userDao.updateUser(user);

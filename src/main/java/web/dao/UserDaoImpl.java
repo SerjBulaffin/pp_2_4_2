@@ -25,9 +25,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         Query query = entityManager.createQuery("Select distinct e from User e join fetch e.roles", User.class);
-
-//        Query query = entityManager.createQuery('select p from Person p join fetch p.lazyDogs where p.name = :name');
-//        query.setParameter('name', name);
         List<User> userList = query.getResultList();
 
         return userList;

@@ -13,12 +13,10 @@ import web.service.UserDetailsServiceImpl;
 import java.security.Principal;
 
 @Controller
-@Transactional
 public class UserController {
 
     private UserDetailsServiceImpl userDetailsService;
     private RoleServiceImpl roleService;
-
 
     @Autowired
     public UserController(UserDetailsServiceImpl userDetailsService, RoleServiceImpl roleService) {

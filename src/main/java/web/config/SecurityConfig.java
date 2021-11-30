@@ -17,8 +17,12 @@ import web.service.UserDetailsServiceImpl;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsServiceImpl = userDetailsService;
+    }
 
 //    @Bean
 //    BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -34,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //устанавливаем список ролей для чтения из базы данных, раскодируем пароль passwordEncoder(passwordEncoder()),
         //в качестве параметра передаем наш бин внизу passwordEncoder()
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder()); //.passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder()); //.passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override
